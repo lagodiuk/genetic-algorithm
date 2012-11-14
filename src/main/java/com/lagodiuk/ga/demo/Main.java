@@ -9,30 +9,28 @@ public class Main {
 
 	public static void main(String[] args) {
 		Population<IntegerArrayGene> population = new Population<IntegerArrayGene>();
-		for( int i = 0; i < 10; i++ ) {
-		    IntegerArrayGene g = new IntegerArrayGene();
-		    population.addGene( g );
+		for (int i = 0; i < 10; i++) {
+			IntegerArrayGene g = new IntegerArrayGene();
+			population.addGene(g);
 		}
-		
-		Fitness<IntegerArrayGene, Double> fit = new TestFitnessFunc();
-		
-		Environment<IntegerArrayGene, Double> env = new Environment<IntegerArrayGene, Double>( population, fit );
-		
-		env.addIterationListener( new IterartionListener<IntegerArrayGene, Double>() {
-		    public void update( Environment<IntegerArrayGene, Double> environment ) {
-			IntegerArrayGene bestGene = environment.getBest();
-			Fitness<IntegerArrayGene, Double> fit = environment.getFitnessFunc();
-			
-			double fitValue = fit.calculate( bestGene );
-			System.out.println(  (int)fitValue + "\t" + bestGene );
-			
-			if( fitValue == 0 ) {
-			    environment.terminate();
-			}
-		    }
-		});
-		
-		env.iterate( 320 );
-	}
 
+		Fitness<IntegerArrayGene, Double> fit = new TestFitnessFunc();
+
+		Environment<IntegerArrayGene, Double> env = new Environment<IntegerArrayGene, Double>(population, fit);
+
+		env.addIterationListener(new IterartionListener<IntegerArrayGene, Double>() {
+			public void update(Environment<IntegerArrayGene, Double> environment) {
+				IntegerArrayGene bestGene = environment.getBest();
+
+				double fitValue = environment.fitness(bestGene);
+				System.out.println((int) fitValue + "\t" + bestGene);
+
+				if (fitValue == 0) {
+					environment.terminate();
+				}
+			}
+		});
+
+		env.iterate(320);
+	}
 }

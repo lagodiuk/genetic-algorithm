@@ -11,7 +11,7 @@ import org.junit.Test;
 public class ArrayGeneTest {
 
 	@Test
-	public void test() {
+	public void test1() {
 		int populationSize = 10;
 		// create initial population of array-genes
 		Population<ArrayGene> population = new Population<ArrayGeneTest.ArrayGene>();
@@ -47,6 +47,41 @@ public class ArrayGeneTest {
 		assertTrue(thirdFitness <= firstFitness);
 		// third gene is better than second
 		assertTrue(thirdFitness <= secondFitness);
+	}
+
+	@Test
+	public void test2() {
+		int populationSize = 10;
+		// create initial population of array-genes
+		Population<ArrayGene> population = new Population<ArrayGeneTest.ArrayGene>();
+		for (int i = 0; i < populationSize; i++) {
+			population.addGene(new ArrayGene());
+		}
+
+		// create instance of fitness function calculator
+		ConsecutiveNumbersFitness fitness = new ConsecutiveNumbersFitness();
+
+		// genetic-algorithm environment
+		Environment<ArrayGene, Integer> environment = new Environment<ArrayGeneTest.ArrayGene, Integer>(population, fitness);
+
+		environment.addIterationListener(new IterartionListener<ArrayGeneTest.ArrayGene, Integer>() {
+			private ArrayGene previousBestGene = null;
+			private Integer previousBestGeneFitness = null;
+
+			public void update(Environment<ArrayGene, Integer> environment) {
+				ArrayGene currentBestGene = environment.getBest();
+				Integer currentBestGeneFitness = environment.fitness(currentBestGene);
+
+				if (this.previousBestGene != null) {
+					assertTrue(currentBestGeneFitness.compareTo(this.previousBestGeneFitness) <= 0);
+				}
+
+				this.previousBestGene = currentBestGene;
+				this.previousBestGeneFitness = currentBestGeneFitness;
+			}
+		});
+
+		environment.iterate(100);
 	}
 
 	private static final int ARR_LEN = 10;

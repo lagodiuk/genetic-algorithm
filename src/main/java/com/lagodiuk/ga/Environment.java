@@ -113,8 +113,8 @@ public class Environment<G extends Gene<G>, T extends Comparable<T>> {
 		this.iterationListeners.add(listener);
 	}
 
-	public Fitness<G, T> getFitnessFunc() {
-		return this.fitnessFunc;
+	public T fitness(G gene) {
+		return this.fitnessFunc.calculate(gene);
 	}
 
 }
