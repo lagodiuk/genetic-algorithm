@@ -1,62 +1,67 @@
 package com.lagodiuk.ga.demo;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.lagodiuk.ga.Gene;
 
 public class IntegerArrayGene implements Gene<IntegerArrayGene> {
-	
-	private int[] data = new int[10];
-	
-	//INIT
-	{
-		for( int i = 0; i < data.length; i++ ) {
-			data[i] = (int)( Math.random() * 10 );
+
+	private static final int MUTATION_COEFFICIENT = 2;
+
+	private static final double CROSSOVER_THRESHOLD = 0.3;
+
+	private final int[] data;
+
+	private final Random rand = new Random();
+
+	public IntegerArrayGene(int length) {
+		this.data = new int[length];
+		// initialize with random values
+		for (int i = 0; i < this.data.length; i++) {
+			this.data[i] = this.rand.nextInt(10);
 		}
 	}
-	
+
 	public List<IntegerArrayGene> crossover(IntegerArrayGene anotherGene) {
-	    	List<IntegerArrayGene> ret = new LinkedList<IntegerArrayGene>(); 
-	    
-	    	IntegerArrayGene crossoveredGene1 = new IntegerArrayGene();
-	    	IntegerArrayGene crossoveredGene2 = new IntegerArrayGene();
-		
-		for( int i = 0; i < data.length; i++ ) {
-			if( Math.random() < 0.3 ) {
-				crossoveredGene1.data[i] = data[i];
+		List<IntegerArrayGene> ret = new LinkedList<IntegerArrayGene>();
+
+		IntegerArrayGene crossoveredGene1 = new IntegerArrayGene(this.data.length);
+		IntegerArrayGene crossoveredGene2 = new IntegerArrayGene(this.data.length);
+
+		for (int i = 0; i < this.data.length; i++) {
+			if (this.rand.nextDouble() < CROSSOVER_THRESHOLD) {
+				crossoveredGene1.data[i] = this.data[i];
 				crossoveredGene2.data[i] = anotherGene.data[i];
 			} else {
 				crossoveredGene1.data[i] = anotherGene.data[i];
-				crossoveredGene2.data[i] = data[i];
+				crossoveredGene2.data[i] = this.data[i];
 			}
 		}
-		ret.add( crossoveredGene1 );
-		ret.add( crossoveredGene2 );
-		
+		ret.add(crossoveredGene1);
+		ret.add(crossoveredGene2);
+
 		return ret;
 	}
-	
+
 	public IntegerArrayGene mutate() {
-	    	IntegerArrayGene ret = new IntegerArrayGene();
-	    	System.arraycopy( data, 0, ret.data, 0, data.length );
-		for( int i = 0; i < ret.data.length; i++ ) {
-			ret.data[i] += (int) ( ( Math.random() - Math.random() ) * 2 );
+		IntegerArrayGene ret = new IntegerArrayGene(this.data.length);
+		System.arraycopy(this.data, 0, ret.data, 0, this.data.length);
+		for (int i = 0; i < ret.data.length; i++) {
+			ret.data[i] += (int) ((this.rand.nextDouble() - this.rand.nextDouble()) * MUTATION_COEFFICIENT);
 		}
 		return ret;
 	}
-	
+
 	public int[] getData() {
-		return data;
+		return this.data;
 	}
-	
+
 	@Override
 	public String toString() {
-	    LinkedList<Integer> ret = new LinkedList<Integer>();
-	    for( int i : data ) {
-		ret.add( i );
-	    }
-	    return ret.toString();
+		return Arrays.toString(this.data);
 	}
 
 }

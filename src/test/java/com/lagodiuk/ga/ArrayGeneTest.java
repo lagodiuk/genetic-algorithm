@@ -12,12 +12,7 @@ public class ArrayGeneTest {
 
 	@Test
 	public void test1() {
-		int populationSize = 10;
-		// create initial population of array-genes
-		Population<ArrayGene> population = new Population<ArrayGeneTest.ArrayGene>();
-		for (int i = 0; i < populationSize; i++) {
-			population.addGene(new ArrayGene());
-		}
+		Population<ArrayGene> population = this.createPopulation();
 
 		// create instance of fitness function calculator
 		ConsecutiveNumbersFitness fitness = new ConsecutiveNumbersFitness();
@@ -25,14 +20,12 @@ public class ArrayGeneTest {
 		// genetic-algorithm environment
 		Environment<ArrayGene, Integer> environment = new Environment<ArrayGeneTest.ArrayGene, Integer>(population, fitness);
 
-		// evolve 10 iterations
 		environment.iterate(10);
 		// and get best gene after 10 iterations
 		ArrayGene firstBestGene = environment.getBest();
 		// calculate fitness
 		Integer firstFitness = fitness.calculate(firstBestGene);
 
-		// evolve next 10 iterations
 		environment.iterate(10);
 		ArrayGene secondBestGene = environment.getBest();
 		Integer secondFitness = fitness.calculate(secondBestGene);
@@ -49,14 +42,19 @@ public class ArrayGeneTest {
 		assertTrue(thirdFitness <= secondFitness);
 	}
 
-	@Test
-	public void test2() {
+	private Population<ArrayGene> createPopulation() {
 		int populationSize = 10;
 		// create initial population of array-genes
 		Population<ArrayGene> population = new Population<ArrayGeneTest.ArrayGene>();
 		for (int i = 0; i < populationSize; i++) {
 			population.addGene(new ArrayGene());
 		}
+		return population;
+	}
+
+	@Test
+	public void test2() {
+		Population<ArrayGene> population = this.createPopulation();
 
 		// create instance of fitness function calculator
 		ConsecutiveNumbersFitness fitness = new ConsecutiveNumbersFitness();
@@ -73,6 +71,8 @@ public class ArrayGeneTest {
 				Integer currentBestGeneFitness = environment.fitness(currentBestGene);
 
 				if (this.previousBestGene != null) {
+					// after each iteration - best gene of population must not
+					// be worse than previous population best gene
 					assertTrue(currentBestGeneFitness.compareTo(this.previousBestGeneFitness) <= 0);
 				}
 
@@ -136,6 +136,9 @@ public class ArrayGeneTest {
 
 		private final int[] target = new int[ARR_LEN];
 
+		/**
+		 * Target array is [0, 1, 2, 3, ... (ARR_LEN-1)]
+		 */
 		public ConsecutiveNumbersFitness() {
 			for (int i = 0; i < ARR_LEN; i++) {
 				this.target[i] = i;
