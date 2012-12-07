@@ -8,7 +8,9 @@ import java.util.List;
 
 public class Population<C extends Chromosome<C>> implements Iterable<C> {
 
-	private List<C> chromosomes = new ArrayList<C>();
+	private static final int DEFAULT_NUMBER_OF_CHROMOSOMES = 128;
+
+	private List<C> chromosomes = new ArrayList<C>(DEFAULT_NUMBER_OF_CHROMOSOMES);
 
 	public void addChromosome(C chromosome) {
 		this.chromosomes.add(chromosome);

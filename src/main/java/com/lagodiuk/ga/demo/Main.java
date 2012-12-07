@@ -19,11 +19,12 @@ public class Main {
 		System.out.println();
 
 		env.addIterationListener(new IterartionListener<IntegerArrayChromosome, Double>() {
+			@Override
 			public void update(Environment<IntegerArrayChromosome, Double> environment) {
-				IntegerArrayChromosome bestGene = environment.getBest();
+				IntegerArrayChromosome bestChromosome = environment.getBest();
 
-				double fitValue = environment.fitness(bestGene);
-				System.out.println(String.format("Best gene: %s \t fit: %5.1f", bestGene, fitValue));
+				double fitValue = environment.fitness(bestChromosome);
+				System.out.println(String.format("Best chromosome: %s \t fit: %5.1f", bestChromosome, fitValue));
 
 				if (fitValue == 0) {
 					// solution found
@@ -35,11 +36,11 @@ public class Main {
 		env.iterate(320);
 	}
 
-	private static Population<IntegerArrayChromosome> createPopulation(int populationSize, int geneLength) {
+	private static Population<IntegerArrayChromosome> createPopulation(int populationSize, int chromosomeLength) {
 		Population<IntegerArrayChromosome> population = new Population<IntegerArrayChromosome>();
 		for (int i = 0; i < populationSize; i++) {
-			IntegerArrayChromosome g = new IntegerArrayChromosome(geneLength);
-			population.addChromosome(g);
+			IntegerArrayChromosome c = new IntegerArrayChromosome(chromosomeLength);
+			population.addChromosome(c);
 		}
 		return population;
 	}
