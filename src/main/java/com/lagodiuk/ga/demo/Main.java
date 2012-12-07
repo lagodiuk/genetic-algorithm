@@ -9,18 +9,18 @@ public class Main {
 	public static void main(String[] args) {
 		int populationSize = 10;
 		int geneLength = 10;
-		Population<IntegerArrayGene> population = createPopulation(populationSize, geneLength);
+		Population<IntegerArrayChromosome> population = createPopulation(populationSize, geneLength);
 
 		AllZerosIntegerArrayFitness fit = new AllZerosIntegerArrayFitness(geneLength);
 
-		Environment<IntegerArrayGene, Double> env = new Environment<IntegerArrayGene, Double>(population, fit);
+		Environment<IntegerArrayChromosome, Double> env = new Environment<IntegerArrayChromosome, Double>(population, fit);
 
 		System.out.println("Target is " + fit);
 		System.out.println();
 
-		env.addIterationListener(new IterartionListener<IntegerArrayGene, Double>() {
-			public void update(Environment<IntegerArrayGene, Double> environment) {
-				IntegerArrayGene bestGene = environment.getBest();
+		env.addIterationListener(new IterartionListener<IntegerArrayChromosome, Double>() {
+			public void update(Environment<IntegerArrayChromosome, Double> environment) {
+				IntegerArrayChromosome bestGene = environment.getBest();
 
 				double fitValue = environment.fitness(bestGene);
 				System.out.println(String.format("Best gene: %s \t fit: %5.1f", bestGene, fitValue));
@@ -35,11 +35,11 @@ public class Main {
 		env.iterate(320);
 	}
 
-	private static Population<IntegerArrayGene> createPopulation(int populationSize, int geneLength) {
-		Population<IntegerArrayGene> population = new Population<IntegerArrayGene>();
+	private static Population<IntegerArrayChromosome> createPopulation(int populationSize, int geneLength) {
+		Population<IntegerArrayChromosome> population = new Population<IntegerArrayChromosome>();
 		for (int i = 0; i < populationSize; i++) {
-			IntegerArrayGene g = new IntegerArrayGene(geneLength);
-			population.addGene(g);
+			IntegerArrayChromosome g = new IntegerArrayChromosome(geneLength);
+			population.addChromosome(g);
 		}
 		return population;
 	}

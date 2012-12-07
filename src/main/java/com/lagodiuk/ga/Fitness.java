@@ -1,14 +1,14 @@
 package com.lagodiuk.ga;
 
-public interface Fitness<G extends Gene<G>, T extends Comparable<T>> {
+public interface Fitness<C extends Chromosome<C>, T extends Comparable<T>> {
 
 	/**
-	 * Assume that gene1 is better than gene2 <br/>
-	 * fit1 = calculate(gene1) <br/>
-	 * fit2 = calculate(gene2) <br/>
+	 * Assume that chromosome1 is better than chromosome2 <br/>
+	 * fit1 = calculate(chromosome1) <br/>
+	 * fit2 = calculate(chromosome2) <br/>
 	 * So the following condition must be true <br/>
 	 * fit1.compareTo(fit2) <= 0 <br/>
 	 */
-	T calculate(G gene);
+	T calculate(C chromosome);
 
 }

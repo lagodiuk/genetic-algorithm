@@ -1,7 +1,7 @@
 package com.lagodiuk.ga;
 
-public interface IterartionListener<G extends Gene<G>, T extends Comparable<T>> {
+public interface IterartionListener<C extends Chromosome<C>, T extends Comparable<T>> {
 
-    void update( Environment<G, T> environment );
+    void update( Environment<C, T> environment );
     
 }

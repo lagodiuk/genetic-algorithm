@@ -6,44 +6,45 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class Population<G extends Gene<G>> implements Iterable<G> {
+public class Population<C extends Chromosome<C>> implements Iterable<C> {
 
-	private List<G> genes = new ArrayList<G>();
+	private List<C> chromosomes = new ArrayList<C>();
 
-	public void addGene(G gene) {
-		this.genes.add(gene);
+	public void addChromosome(C chromosome) {
+		this.chromosomes.add(chromosome);
 	}
 
 	public int getSize() {
-		return this.genes.size();
+		return this.chromosomes.size();
 	}
 
-	public G getRandomGene() {
-		int numOfGenes = this.genes.size();
+	public C getRandomChromosome() {
+		int numOfChromosomes = this.chromosomes.size();
 		// TODO improve random generator
 		// maybe use pattern strategy ?
-		int indx = (int) (Math.random() * numOfGenes);
-		return this.genes.get(indx);
+		int indx = (int) (Math.random() * numOfChromosomes);
+		return this.chromosomes.get(indx);
 	}
 
-	public G getGeneByIndex(int indx) {
-		return this.genes.get(indx);
+	public C getChromosomeByIndex(int indx) {
+		return this.chromosomes.get(indx);
 	}
 
-	public void sortPopulationByFitness(Comparator<G> genesComparator) {
-		Collections.shuffle(this.genes);
-		Collections.sort(this.genes, genesComparator);
+	public void sortPopulationByFitness(Comparator<C> chromosomesComparator) {
+		Collections.shuffle(this.chromosomes);
+		Collections.sort(this.chromosomes, chromosomesComparator);
 	}
 
 	/**
 	 * shortening population till specific number
 	 */
 	public void trim(int len) {
-		this.genes = this.genes.subList(0, len);
+		this.chromosomes = this.chromosomes.subList(0, len);
 	}
 
-	public Iterator<G> iterator() {
-		return this.genes.iterator();
+	@Override
+	public Iterator<C> iterator() {
+		return this.chromosomes.iterator();
 	}
 
 }

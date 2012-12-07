@@ -4,12 +4,13 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Environment<G extends Gene<G>, T extends Comparable<T>> {
+public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 
-	private static final int ALL_PARENTAL_GENES = Integer.MAX_VALUE;
+	private static final int ALL_PARENTAL_CHROMOSOMES = Integer.MAX_VALUE;
 
-	private class GenesComparator implements Comparator<G> {
-		public int compare(G o1, G o2) {
+	private class ChromosomesComparator implements Comparator<C> {
+		@Override
+		public int compare(C o1, C o2) {
 			T fit1 = Environment.this.fitnessFunc.calculate(o1);
 			T fit2 = Environment.this.fitnessFunc.calculate(o2);
 			int ret = fit1.compareTo(fit2);
@@ -17,51 +18,52 @@ public class Environment<G extends Gene<G>, T extends Comparable<T>> {
 		};
 	}
 
-	private final GenesComparator genesComparator;
+	private final ChromosomesComparator chromosomesComparator;
 
-	private final Fitness<G, T> fitnessFunc;
+	private final Fitness<C, T> fitnessFunc;
 
-	private Population<G> population;
+	private Population<C> population;
 
 	// listeners of genetic algorithm iterations (handle callback afterwards)
-	private final List<IterartionListener<G, T>> iterationListeners = new LinkedList<IterartionListener<G, T>>();
+	private final List<IterartionListener<C, T>> iterationListeners = new LinkedList<IterartionListener<C, T>>();
 
 	private boolean terminate = false;
 
-	// number of parental genes, which survive (and move to new population)
-	private int parentGenesSurviveCount = ALL_PARENTAL_GENES;
+	// number of parental chromosomes, which survive (and move to new
+	// population)
+	private int parentChromosomesSurviveCount = ALL_PARENTAL_CHROMOSOMES;
 
 	private int iteration = 0;
 
-	public Environment(Population<G> population, Fitness<G, T> fitnessFunc) {
+	public Environment(Population<C> population, Fitness<C, T> fitnessFunc) {
 		this.population = population;
 		this.fitnessFunc = fitnessFunc;
-		this.genesComparator = new GenesComparator();
+		this.chromosomesComparator = new ChromosomesComparator();
 	}
 
 	public void iterate() {
 		int parentPopulationSize = this.population.getSize();
 
-		Population<G> newPopulation = new Population<G>();
+		Population<C> newPopulation = new Population<C>();
 
-		for (int i = 0; (i < parentPopulationSize) && (i < this.parentGenesSurviveCount); i++) {
-			newPopulation.addGene(this.population.getGeneByIndex(i));
+		for (int i = 0; (i < parentPopulationSize) && (i < this.parentChromosomesSurviveCount); i++) {
+			newPopulation.addChromosome(this.population.getChromosomeByIndex(i));
 		}
 
 		for (int i = 0; i < parentPopulationSize; i++) {
-			G gene = this.population.getGeneByIndex(i);
-			G mutated = gene.mutate();
+			C chromosome = this.population.getChromosomeByIndex(i);
+			C mutated = chromosome.mutate();
 
-			G otherGene = this.population.getRandomGene();
-			List<G> crossovered = gene.crossover(otherGene);
+			C otherChromosome = this.population.getRandomChromosome();
+			List<C> crossovered = chromosome.crossover(otherChromosome);
 
-			newPopulation.addGene(mutated);
-			for (G g : crossovered) {
-				newPopulation.addGene(g);
+			newPopulation.addChromosome(mutated);
+			for (C c : crossovered) {
+				newPopulation.addChromosome(c);
 			}
 		}
 
-		newPopulation.sortPopulationByFitness(this.genesComparator);
+		newPopulation.sortPopulationByFitness(this.chromosomesComparator);
 		newPopulation.trim(parentPopulationSize);
 		this.population = newPopulation;
 	}
@@ -75,7 +77,7 @@ public class Environment<G extends Gene<G>, T extends Comparable<T>> {
 			}
 			this.iterate();
 			this.iteration = i;
-			for (IterartionListener<G, T> l : this.iterationListeners) {
+			for (IterartionListener<C, T> l : this.iterationListeners) {
 				l.update(this);
 			}
 		}
@@ -89,32 +91,32 @@ public class Environment<G extends Gene<G>, T extends Comparable<T>> {
 		this.terminate = true;
 	}
 
-	public Population<G> getPopulation() {
+	public Population<C> getPopulation() {
 		return this.population;
 	}
 
-	public G getBest() {
-		return this.population.getGeneByIndex(0);
+	public C getBest() {
+		return this.population.getChromosomeByIndex(0);
 	}
 
-	public G getWorst() {
-		return this.population.getGeneByIndex(this.population.getSize() - 1);
+	public C getWorst() {
+		return this.population.getChromosomeByIndex(this.population.getSize() - 1);
 	}
 
-	public void setParentGenesSurviveCount(int parentGenesCount) {
-		this.parentGenesSurviveCount = parentGenesCount;
+	public void setParentChromosomesSurviveCount(int parentChromosomesCount) {
+		this.parentChromosomesSurviveCount = parentChromosomesCount;
 	}
 
-	public int getParentGenesSurviveCount() {
-		return this.parentGenesSurviveCount;
+	public int getParentChromosomesSurviveCount() {
+		return this.parentChromosomesSurviveCount;
 	}
 
-	public void addIterationListener(IterartionListener<G, T> listener) {
+	public void addIterationListener(IterartionListener<C, T> listener) {
 		this.iterationListeners.add(listener);
 	}
 
-	public T fitness(G gene) {
-		return this.fitnessFunc.calculate(gene);
+	public T fitness(C chromosome) {
+		return this.fitnessFunc.calculate(chromosome);
 	}
 
 }

@@ -5,9 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import com.lagodiuk.ga.Gene;
+import com.lagodiuk.ga.Chromosome;
 
-public class IntegerArrayGene implements Gene<IntegerArrayGene> {
+public class IntegerArrayChromosome implements Chromosome<IntegerArrayChromosome> {
 
 	private static final int MUTATION_COEFFICIENT = 2;
 
@@ -17,7 +17,7 @@ public class IntegerArrayGene implements Gene<IntegerArrayGene> {
 
 	private final Random rand = new Random();
 
-	public IntegerArrayGene(int length) {
+	public IntegerArrayChromosome(int length) {
 		this.data = new int[length];
 		// initialize with random values
 		for (int i = 0; i < this.data.length; i++) {
@@ -25,29 +25,29 @@ public class IntegerArrayGene implements Gene<IntegerArrayGene> {
 		}
 	}
 
-	public List<IntegerArrayGene> crossover(IntegerArrayGene anotherGene) {
-		List<IntegerArrayGene> ret = new LinkedList<IntegerArrayGene>();
+	public List<IntegerArrayChromosome> crossover(IntegerArrayChromosome anotherChromosome) {
+		List<IntegerArrayChromosome> ret = new LinkedList<IntegerArrayChromosome>();
 
-		IntegerArrayGene crossoveredGene1 = new IntegerArrayGene(this.data.length);
-		IntegerArrayGene crossoveredGene2 = new IntegerArrayGene(this.data.length);
+		IntegerArrayChromosome crossoveredChromosome1 = new IntegerArrayChromosome(this.data.length);
+		IntegerArrayChromosome crossoveredChromosome2 = new IntegerArrayChromosome(this.data.length);
 
 		for (int i = 0; i < this.data.length; i++) {
 			if (this.rand.nextDouble() < CROSSOVER_THRESHOLD) {
-				crossoveredGene1.data[i] = this.data[i];
-				crossoveredGene2.data[i] = anotherGene.data[i];
+				crossoveredChromosome1.data[i] = this.data[i];
+				crossoveredChromosome2.data[i] = anotherChromosome.data[i];
 			} else {
-				crossoveredGene1.data[i] = anotherGene.data[i];
-				crossoveredGene2.data[i] = this.data[i];
+				crossoveredChromosome1.data[i] = anotherChromosome.data[i];
+				crossoveredChromosome2.data[i] = this.data[i];
 			}
 		}
-		ret.add(crossoveredGene1);
-		ret.add(crossoveredGene2);
+		ret.add(crossoveredChromosome1);
+		ret.add(crossoveredChromosome2);
 
 		return ret;
 	}
 
-	public IntegerArrayGene mutate() {
-		IntegerArrayGene ret = new IntegerArrayGene(this.data.length);
+	public IntegerArrayChromosome mutate() {
+		IntegerArrayChromosome ret = new IntegerArrayChromosome(this.data.length);
 		System.arraycopy(this.data, 0, ret.data, 0, this.data.length);
 		for (int i = 0; i < ret.data.length; i++) {
 			ret.data[i] += (int) ((this.rand.nextDouble() - this.rand.nextDouble()) * MUTATION_COEFFICIENT);

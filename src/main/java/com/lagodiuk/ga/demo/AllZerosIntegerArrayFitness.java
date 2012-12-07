@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import com.lagodiuk.ga.Fitness;
 
-public class AllZerosIntegerArrayFitness implements Fitness<IntegerArrayGene, Double> {
+public class AllZerosIntegerArrayFitness implements Fitness<IntegerArrayChromosome, Double> {
 
 	private final int[] target;
 
@@ -16,7 +16,7 @@ public class AllZerosIntegerArrayFitness implements Fitness<IntegerArrayGene, Do
 		}
 	}
 
-	public Double calculate(IntegerArrayGene gene) {
+	public Double calculate(IntegerArrayChromosome gene) {
 		double delt = 0;
 		int[] arr = gene.getData();
 		for (int i = 0; i < arr.length; i++) {
