@@ -23,11 +23,11 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 		}
 
 		private T fit(C chr) {
-			if (this.cache.containsKey(chr)) {
-				return this.cache.get(chr);
+			T fit = this.cache.get(chr);
+			if (fit == null) {
+				fit = Environment.this.fitnessFunc.calculate(chr);
+				this.cache.put(chr, fit);
 			}
-			T fit = Environment.this.fitnessFunc.calculate(chr);
-			this.cache.put(chr, fit);
 			return fit;
 		};
 	}
