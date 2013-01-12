@@ -3,18 +3,32 @@ package com.lagodiuk.ga;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 
 	private static final int ALL_PARENTAL_CHROMOSOMES = Integer.MAX_VALUE;
 
 	private class ChromosomesComparator implements Comparator<C> {
+
+		private final Map<C, T> cache = new WeakHashMap<C, T>();
+
 		@Override
-		public int compare(C o1, C o2) {
-			T fit1 = Environment.this.fitnessFunc.calculate(o1);
-			T fit2 = Environment.this.fitnessFunc.calculate(o2);
+		public int compare(C chr1, C chr2) {
+			T fit1 = this.fit(chr1);
+			T fit2 = this.fit(chr2);
 			int ret = fit1.compareTo(fit2);
 			return ret;
+		}
+
+		private T fit(C chr) {
+			if (this.cache.containsKey(chr)) {
+				return this.cache.get(chr);
+			}
+			T fit = Environment.this.fitnessFunc.calculate(chr);
+			this.cache.put(chr, fit);
+			return fit;
 		};
 	}
 
