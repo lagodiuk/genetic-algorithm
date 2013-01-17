@@ -30,6 +30,10 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 			}
 			return fit;
 		};
+
+		public void clearCache() {
+			this.cache.clear();
+		}
 	}
 
 	private final ChromosomesComparator chromosomesComparator;
@@ -133,4 +137,7 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 		return this.chromosomesComparator.fit(chromosome);
 	}
 
+	public void clearCache() {
+		this.chromosomesComparator.clearCache();
+	}
 }
