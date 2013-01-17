@@ -22,7 +22,7 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 			return ret;
 		}
 
-		private T fit(C chr) {
+		public T fit(C chr) {
 			T fit = this.cache.get(chr);
 			if (fit == null) {
 				fit = Environment.this.fitnessFunc.calculate(chr);
@@ -130,7 +130,7 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 	}
 
 	public T fitness(C chromosome) {
-		return this.fitnessFunc.calculate(chromosome);
+		return this.chromosomesComparator.fit(chromosome);
 	}
 
 }
