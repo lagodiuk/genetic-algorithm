@@ -1,6 +1,6 @@
 package com.lagodiuk.ga.demo;
 
-import com.lagodiuk.ga.Environment;
+import com.lagodiuk.ga.GeneticAlgorithm;
 import com.lagodiuk.ga.IterartionListener;
 import com.lagodiuk.ga.Population;
 
@@ -13,14 +13,14 @@ public class Main {
 
 		AllZerosIntegerArrayFitness fit = new AllZerosIntegerArrayFitness(geneLength);
 
-		Environment<IntegerArrayChromosome, Double> env = new Environment<IntegerArrayChromosome, Double>(population, fit);
+		GeneticAlgorithm<IntegerArrayChromosome, Double> env = new GeneticAlgorithm<IntegerArrayChromosome, Double>(population, fit);
 
 		System.out.println("Target is " + fit);
 		System.out.println();
 
 		env.addIterationListener(new IterartionListener<IntegerArrayChromosome, Double>() {
 			@Override
-			public void update(Environment<IntegerArrayChromosome, Double> environment) {
+			public void update(GeneticAlgorithm<IntegerArrayChromosome, Double> environment) {
 				IntegerArrayChromosome bestChromosome = environment.getBest();
 
 				double fitValue = environment.fitness(bestChromosome);

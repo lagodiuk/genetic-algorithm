@@ -18,7 +18,7 @@ public class ArrayChromosomeTest {
 		ConsecutiveNumbersFitness fitness = new ConsecutiveNumbersFitness();
 
 		// genetic-algorithm environment
-		Environment<ArrayChromosome, Integer> environment = new Environment<ArrayChromosomeTest.ArrayChromosome, Integer>(population, fitness);
+		GeneticAlgorithm<ArrayChromosome, Integer> environment = new GeneticAlgorithm<ArrayChromosomeTest.ArrayChromosome, Integer>(population, fitness);
 
 		environment.iterate(10);
 		// and get best chromosome after 10 iterations
@@ -60,14 +60,14 @@ public class ArrayChromosomeTest {
 		ConsecutiveNumbersFitness fitness = new ConsecutiveNumbersFitness();
 
 		// genetic-algorithm environment
-		Environment<ArrayChromosome, Integer> environment = new Environment<ArrayChromosomeTest.ArrayChromosome, Integer>(population, fitness);
+		GeneticAlgorithm<ArrayChromosome, Integer> environment = new GeneticAlgorithm<ArrayChromosomeTest.ArrayChromosome, Integer>(population, fitness);
 
 		environment.addIterationListener(new IterartionListener<ArrayChromosomeTest.ArrayChromosome, Integer>() {
 			private ArrayChromosome previousBestChromosome = null;
 			private Integer previousBestChromosomeFitness = null;
 
 			@Override
-			public void update(Environment<ArrayChromosome, Integer> environment) {
+			public void update(GeneticAlgorithm<ArrayChromosome, Integer> environment) {
 				ArrayChromosome currentBestChromosome = environment.getBest();
 				Integer currentBestChromosomeFitness = environment.fitness(currentBestChromosome);
 
@@ -79,6 +79,8 @@ public class ArrayChromosomeTest {
 
 				this.previousBestChromosome = currentBestChromosome;
 				this.previousBestChromosomeFitness = currentBestChromosomeFitness;
+
+				environment.clearCache();
 			}
 		});
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
+public class GeneticAlgorithm<C extends Chromosome<C>, T extends Comparable<T>> {
 
 	private static final int ALL_PARENTAL_CHROMOSOMES = Integer.MAX_VALUE;
 
@@ -25,7 +25,7 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 		public T fit(C chr) {
 			T fit = this.cache.get(chr);
 			if (fit == null) {
-				fit = Environment.this.fitnessFunc.calculate(chr);
+				fit = GeneticAlgorithm.this.fitnessFunc.calculate(chr);
 				this.cache.put(chr, fit);
 			}
 			return fit;
@@ -53,7 +53,7 @@ public class Environment<C extends Chromosome<C>, T extends Comparable<T>> {
 
 	private int iteration = 0;
 
-	public Environment(Population<C> population, Fitness<C, T> fitnessFunc) {
+	public GeneticAlgorithm(Population<C> population, Fitness<C, T> fitnessFunc) {
 		this.population = population;
 		this.fitnessFunc = fitnessFunc;
 		this.chromosomesComparator = new ChromosomesComparator();
