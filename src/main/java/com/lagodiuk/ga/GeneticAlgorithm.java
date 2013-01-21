@@ -57,6 +57,7 @@ public class GeneticAlgorithm<C extends Chromosome<C>, T extends Comparable<T>> 
 		this.population = population;
 		this.fitnessFunc = fitnessFunc;
 		this.chromosomesComparator = new ChromosomesComparator();
+		this.population.sortPopulationByFitness(this.chromosomesComparator);
 	}
 
 	public void iterate() {
@@ -131,6 +132,10 @@ public class GeneticAlgorithm<C extends Chromosome<C>, T extends Comparable<T>> 
 
 	public void addIterationListener(IterartionListener<C, T> listener) {
 		this.iterationListeners.add(listener);
+	}
+
+	public void removeIterationListener(IterartionListener<C, T> listener) {
+		this.iterationListeners.remove(listener);
 	}
 
 	public T fitness(C chromosome) {
