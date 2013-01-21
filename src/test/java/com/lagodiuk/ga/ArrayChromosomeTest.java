@@ -20,17 +20,17 @@ public class ArrayChromosomeTest {
 		// genetic-algorithm environment
 		GeneticAlgorithm<ArrayChromosome, Integer> environment = new GeneticAlgorithm<ArrayChromosomeTest.ArrayChromosome, Integer>(population, fitness);
 
-		environment.iterate(10);
+		environment.evolve(10);
 		// and get best chromosome after 10 iterations
 		ArrayChromosome firstBestChromosome = environment.getBest();
 		// calculate fitness
 		Integer firstFitness = fitness.calculate(firstBestChromosome);
 
-		environment.iterate(10);
+		environment.evolve(10);
 		ArrayChromosome secondBestChromosome = environment.getBest();
 		Integer secondFitness = fitness.calculate(secondBestChromosome);
 
-		environment.iterate(80);
+		environment.evolve(80);
 		ArrayChromosome thirdBestChromosome = environment.getBest();
 		Integer thirdFitness = fitness.calculate(thirdBestChromosome);
 
@@ -84,7 +84,7 @@ public class ArrayChromosomeTest {
 			}
 		});
 
-		environment.iterate(100);
+		environment.evolve(100);
 	}
 
 	private static final int ARR_LEN = 10;

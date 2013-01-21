@@ -33,7 +33,7 @@ public class Main {
 			}
 		});
 
-		env.iterate(320);
+		env.evolve(320);
 	}
 
 	private static Population<IntegerArrayChromosome> createPopulation(int populationSize, int chromosomeLength) {
