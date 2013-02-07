@@ -5,6 +5,13 @@ Generic implementation of genetic algorithm in Java.
 
 ## About ##
 
+### quick start ###
+1. git clone https://github.com/lagodiuk/genetic-algorithm.git </li>
+2. mvn -f genetic-algorithm/pom.xml install </li>
+
+### architecture overview ###
+![Architecture](https://raw.github.com/lagodiuk/genetic-algorithm/master/about/architecture.png)
+
 ### basic example ###
 ```java
 import java.util.Arrays;
