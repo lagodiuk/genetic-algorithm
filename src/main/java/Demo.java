@@ -1,12 +1,3 @@
-genetic-algorithm
-=================
-
-Generic implementation of genetic algorithm in Java.
-
-## About ##
-
-### basic example ###
-```java
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -163,4 +154,3 @@ public class Demo {
 		}
 	}
 }
-```
