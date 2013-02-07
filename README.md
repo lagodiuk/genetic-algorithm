@@ -1,7 +1,7 @@
 genetic-algorithm
 =================
 
-Generic implementation of genetic algorithm in Java.
+Generic implementation of [Genetic algorithm](http://en.wikipedia.org/wiki/Genetic_algorithm) in Java.
 
 ## About ##
 
@@ -171,3 +171,5 @@ public class Demo {
 	}
 }
 ```
+
+![Population size](https://raw.github.com/lagodiuk/genetic-algorithm/master/about/population_size.png)
