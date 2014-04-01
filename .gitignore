@@ -4,6 +4,8 @@
 *.class
 *.jar
 
+.idea
+*.iml
 
 #
 # Compiled files directory
