@@ -51,7 +51,7 @@ public class GeneticAlgorithm<C extends Chromosome<C>, T extends Comparable<T>> 
 		}
 	}
 
-	private final ChromosomesComparator chromosomesComparator;
+	private final ChromosomesComparator chromosomesComparator = new ChromosomesComparator();
 
 	private final Fitness<C, T> fitnessFunc;
 
@@ -71,7 +71,6 @@ public class GeneticAlgorithm<C extends Chromosome<C>, T extends Comparable<T>> 
 	public GeneticAlgorithm(Population<C> population, Fitness<C, T> fitnessFunc) {
 		this.population = population;
 		this.fitnessFunc = fitnessFunc;
-		this.chromosomesComparator = new ChromosomesComparator();
 		this.population.sortPopulationByFitness(this.chromosomesComparator);
 	}
 
