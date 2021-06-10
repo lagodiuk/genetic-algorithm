@@ -7,7 +7,10 @@ Generic implementation of [Genetic algorithm](http://en.wikipedia.org/wiki/Genet
 
 ### quick start ###
 1. git clone https://github.com/lagodiuk/genetic-algorithm.git </li>
-2. mvn -f genetic-algorithm/pom.xml install </li>
+2. cd genetic-algorithm </li>
+3. .\mvnw install [windows users] </li>
+4. chmod +x mvnw </li>
+5. ./mvnw install [linux users] </li>
 
 ### architecture overview ###
 ![Architecture](https://raw.github.com/lagodiuk/genetic-algorithm/master/about/architecture.png)
